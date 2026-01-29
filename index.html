@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Student Result Management System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" />
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+<!--navbar: Bootstrap ka navigation bar create karta hai.
+navbar-expand-lg: Navbar mobile par collapse hota hai, lekin large screen par expand.
+navbar-dark: Text ko light banata hai for dark background.
+bg-dark: Background color dark (blackish).-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <div class="container">
+        <!-- navbar-brand: Logo ya brand name ke liye standard styling.-->
+        <a class="navbar-brand fw-bold" href="{% url 'index' %}"><i class="fas fa-school"></i> SRMS</a>
+        <!--navbar-toggler: Collapsed menu toggle button for small screens.
+        navbar-toggler-icon: Hamburger icon (≡) dikhata hai.-->
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+       <!--collapse: Collapsible behavior add karta hai for small screens.
+    navbar-collapse: Collapse target for the navbar.
+    justify-content-end: Navigation links ko right-align karta hai.-->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav text-uppercase">
+                <!--navbar-nav: Bootstrap nav list styling.-->
+                <li class="nav-item"><a class="nav-link active" href="{% url 'index' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'search_result' %}">Student Result</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'admin_login' %}">Admin</a></li>
+            </ul>
+    <!--nav-item: Individual menu item define karta hai.
+    nav-link: Link ke liye Bootstrap ka style.
+    active: Active page dikhane ke liye special highlight deta hai.-->
+        </div>
+    </div>
+</nav>
+
+<!-- Header -->
+<header class="py-5 bg-dark text-white">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold">Student Result Management System</h1>
+        <p class="lead">Manage and view results efficiently</p>
+    </div>
+    <!--display-4: Large and bold display heading.-->
+</header>
+
+<!-- Notice Board -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4"><i class="fas fa-bullhorn text-primary"></i> Notice Board</h2>
+        <div class="border rounded p-3 bg-light">
+    <!--rounded: Border ko rounded corners deta hai.-->
+            <marquee direction="up" scrollamount="2" onmouseover="this.stop();" onmouseout="this.start();">
+                <ul class="list-unstyled">
+                    {% for notice in notices %}
+                        <li class="mb-2">
+                            <a href="{% url 'notice_detail' notice.id %}" target="_blank" class="text-dark">
+                                <i class="fas fa-angle-right me-2 text-primary"></i>{{ notice.title }}
+                <!--me-2: Margin-end (right side) 2 units → icon aur text ke beech gap.-->
+                            </a>
+                        </li>
+                    {% empty %}
+                        <li>No notices found.</li>
+                    {% endfor %}
+                </ul>
+            </marquee>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-4 bg-dark text-white text-center">
+    <div class="container">
+        <p class="mb-0">&copy; Student Result Management System</p>
+        <!--mb-0: Margin-bottom 0 — taaki footer tightly fit ho.-->
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
